@@ -169,11 +169,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Swiper
     const swiper = new Swiper('.certificates-swiper', {
-        effect: 'cards',
+        effect: 'slide',
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
+        initialSlide: 0,
         loop: true,
+        spaceBetween: 30,
         autoplay: {
             delay: 3000,
             disableOnInteraction: false,
@@ -185,24 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 20
-            },
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 30
-            },
-            768: {
-                slidesPerView: 2,
-                spaceBetween: 40
-            },
-            1024: {
-                slidesPerView: 3,
-                spaceBetween: 50
-            }
         }
     });
 
