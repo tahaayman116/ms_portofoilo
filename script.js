@@ -169,13 +169,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize Swiper
     const swiper = new Swiper('.certificates-swiper', {
-        effect: 'slide',
+        effect: 'cards',
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
-        initialSlide: 0,
+        cardsEffect: {
+            perSlideOffset: 8,
+            perSlideRotate: 2,
+            rotate: true,
+            slideShadows: true
+        },
         loop: true,
-        spaceBetween: 30,
         autoplay: {
             delay: 3000,
             disableOnInteraction: false,
