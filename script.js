@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Load certificates
-    const certificatesPath = './certificates/';
+    const certificatesPath = 'certificates/';  
     const certificates = [
         'WhatsApp Image 2025-01-26 at 8.28.28 PM.jpeg',
         'WhatsApp Image 2025-01-26 at 8.28.29 PM.jpeg',
@@ -230,36 +230,46 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const certificatesWrapper = document.querySelector('.swiper-wrapper');
+    if (!certificatesWrapper) {
+        console.error('Could not find certificates wrapper element');
+        return;
+    }
+
     console.log('Loading certificates...');
     certificates.forEach((cert, index) => {
         const slide = document.createElement('div');
         slide.classList.add('swiper-slide');
         
         const img = document.createElement('img');
-        img.src = certificatesPath + cert;
+        const imagePath = certificatesPath + cert;
+        console.log(`Attempting to load image: ${imagePath}`);
+        
         img.alt = `Certificate ${index + 1}`;
         img.loading = 'lazy';
         
         // Better error handling
         img.onerror = () => {
-            console.error(`Failed to load image: ${certificatesPath + cert}`);
-            // Add a fallback/placeholder
+            console.error(`Failed to load image: ${imagePath}`);
             img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNHB4IiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
             slide.classList.add('error');
         };
         
         // Log successful loads
         img.onload = () => {
-            console.log(`Successfully loaded image: ${cert}`);
+            console.log(`Successfully loaded image: ${imagePath}`);
             slide.classList.add('loaded');
         };
 
+        // Set src after setting up event handlers
+        img.src = imagePath;
+        
         slide.appendChild(img);
         certificatesWrapper.appendChild(slide);
     });
 
     // Update Swiper after adding slides
     swiper.update();
+    console.log('Swiper updated with new slides');
 });
 
 // Modal elements
@@ -289,6 +299,7 @@ const closeModal = () => {
 };
 
 const loadModalImage = (index) => {
+    const certificatesPath = 'certificates/';  
     modalImage.classList.remove('loaded');
     modalImage.src = certificatesPath + certificates[index];
     modalImage.onload = () => {
